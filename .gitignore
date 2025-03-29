@@ -1,0 +1,43 @@
+# Python bytecode 파일
+*.pyc
+*.pyo
+__pycache__/
+
+# 가상 환경 폴더 (예: venv, env)
+venv/
+env/
+
+# 디버그 로그 파일
+*.log
+
+# IDE 관련 파일
+.vscode/
+.idea/
+
+# 환경 변수 파일 (.env)
+.env
+
+# 배포 관련 파일
+*.egg-info/
+*.eggs/
+dist/
+build/
+
+# 테스트 폴더
+*.cover
+.coverage
+nosetests.xml
+coverage.xml
+
+# Jupyter notebook 관련 파일
+.ipynb_checkpoints/
+
+# Windows 시스템 파일
+Thumbs.db
+Desktop.ini
+
+# macOS 시스템 파일
+.DS_Store
+
+# 로그인 파일
+config/db_login.json
