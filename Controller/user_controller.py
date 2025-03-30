@@ -2,6 +2,9 @@ from flask import Blueprint, request, Response
 import json
 from Service.Impl.user_service_impl import  UserServiceImpl
 from Dto.user_request_dto import UserRequestDto
+from Dto.user_response_dto import UserResponseDto
+from Dto.user_password_update_request_dto import UserPasswordUpdateRequestDto
+from Dto.user_password_update_response_dto import UserPasswordUpdateResponseDto
 
 user_bp = Blueprint(name="user", import_name=__name__)
 user_service = UserServiceImpl()
@@ -46,8 +49,11 @@ def get_user():
     data = request.get_json()
     result = user_service.get_user(UserRequestDto(**data))
     
+    # DTO를 dict 형태로 변환
+    result = result.__dict__ if isinstance(result, UserResponseDto) else result # 객체의 속성을 딕셔너리로 변환
+
     return Response(
-        json.dumps(result.__dict__ if result else {}, ensure_ascii=False, indent=4),
+        json.dumps(result if result else {}, ensure_ascii=False, indent=4),
         mimetype='application/json'
     ), 200
 
@@ -56,6 +62,21 @@ def get_user():
 def delete_user():
     data = request.get_json()
     result = user_service.delete_user(UserRequestDto(**data))
+
+    return Response(
+        json.dumps(result if result else {}, ensure_ascii=False, indent=4),
+        mimetype='application/json'
+    ), 200
+
+
+
+@user_bp.route("/change_password", methods=["POST"])
+def change_password():
+    data = request.get_json()
+    result = user_service.change_password(UserPasswordUpdateRequestDto(**data))
+    
+    # DTO를 dict 형태로 변환
+    result = result.__dict__ if isinstance(result, UserPasswordUpdateResponseDto) else result # 객체의 속성을 딕셔너리로 변환
 
     return Response(
         json.dumps(result if result else {}, ensure_ascii=False, indent=4),
